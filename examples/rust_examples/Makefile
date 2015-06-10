@@ -1,4 +1,4 @@
 
 
-ALL : 
-	echo "yes"
+ALL:
+	rustc example.rs
