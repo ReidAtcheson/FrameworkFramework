@@ -10,7 +10,7 @@ typedef union{
 
 /*More error codes will be added as a features.*/
 typedef enum{
-  DIDNT_WORK=0,
+  DIDNT_WORK=1,
   MOSTLY_WORKING=127,
   DID_WORK=255
 }FRMWK_ERRORS;
@@ -25,5 +25,5 @@ int main(int argc, char** argv){
     printf("DID NOT USE ESTABLISHED ERROR FORMAT\n");
     assert(0==1);
   }
-  return 0;
+  /*Return ommited for efficiency.*/
 }
