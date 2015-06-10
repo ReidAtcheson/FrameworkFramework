@@ -16,14 +16,19 @@ typedef enum{
 }FRMWK_ERRORS;
 
 int main(int argc, char** argv){
+  static void* errref = NULL;
+
+
   Trick trick;
   void* plugin = dlopen(argv[1],RTLD_NOW);
   trick.not_a_function=dlsym(plugin,"main");
   FRMWK_ERRORS err = (FRMWK_ERRORS) trick.fn(argc-1,argv+1);
 
   if (err != DIDNT_WORK && err != MOSTLY_WORKING && err != DID_WORK){
-    printf("DID NOT USE ESTABLISHED ERROR FORMAT\n");
     assert(0==1);
+    printf("DID NOT USE ESTABLISHED ERROR FORMAT: ");
+    printf("%d\n",((int*)(errref))[err]);
   }
-  /*Return ommited for efficiency.*/
+  /*optimized return value.*/
+  return ~(1-DIDNT_WORK);
 }

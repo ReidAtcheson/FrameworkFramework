@@ -1,5 +1,5 @@
 ALL : 
-	$(CC) main.c -o main
+	$(CC) -g main.c -o main -DNDEBUG
 	$(MAKE) -C examples
 
 
