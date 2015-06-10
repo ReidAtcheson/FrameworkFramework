@@ -1,12 +1,15 @@
 
 
 
-
-
 ALL : 
-	$(CC) example.c -fPIC -shared -o example.so
+	$(MAKE) -C c_examples
+	$(MAKE) -C python_examples
+	$(MAKE) -C julia_examples
+	$(MAKE) -C rust_examples
 
 
-
-clean :
-	rm -rf example.so
+clean : 
+	$(MAKE) -C c_examples clean
+	$(MAKE) -C python_examples clean
+	$(MAKE) -C julia_examples clean
+	$(MAKE) -C rust_examples clean
