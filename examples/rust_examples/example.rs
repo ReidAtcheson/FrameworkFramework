@@ -16,19 +16,23 @@ fn parse_c_str(c_buf:*const c_char) -> Option<String> {
     }
 }
 
-#[no_mangle]
-pub extern fn main(argc:c_int, argv:*const *const c_char) -> i32 {
+fn parse_c_str_array(argc:c_int, argv:*const *const c_char) -> Option<Vec<String>> {
     let mut result:Vec<String> = Vec::new();
     for idx in 0..(argc) {
         let arg = unsafe {parse_c_str(*argv.offset(idx as isize))};
         match arg {
             Some(x) => result.push(x),
-            _ => {}
+            _ => return None
         }
     }
+    Some(result)
+}
+
+#[no_mangle]
+pub extern fn main(argc:c_int, argv:*const *const c_char) -> i32 {
     println!("Hello world from Rust (argc={})\n", argc);
     let mut idx = 0;
-    for x in result {
+    for x in parse_c_str_array(argc, argv).unwrap() {
         println!("argv[{}]={}\n", idx, x);
         idx+= 1;
     }
